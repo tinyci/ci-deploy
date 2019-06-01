@@ -1,0 +1,19 @@
+---
+
+- name: "create agents configuration file"
+  template:
+    src: "services.yaml.j2"
+    dest: "{{ tinyci.config.agent }}"
+  register: config_file_state
+
+- include: "logsvc.yml"
+
+- include: "datasvc.yml"
+
+- include: "assetsvc.yml"
+
+- include: "uisvc.yml"
+
+- include: "queuesvc.yml"
+
+- include: "hooksvc.yml"

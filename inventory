@@ -1,0 +1,11 @@
+[tinyci]
+machine-1.local ansible_user=erikh
+
+[postgres]
+machine-1.local ansible_user=erikh
+
+[runners]
+machine-2.local ansible_user=erikh tinyci.runner.queue=test1
+machine-3.local ansible_user=erikh
+machine-4.local ansible_user=erikh
+machine-5.local ansible_user=erikh

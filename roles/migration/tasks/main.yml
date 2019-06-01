@@ -1,0 +1,12 @@
+---
+
+- name: "migrate to latest database version"
+  command: "docker run --net host --rm \
+            tinyci/release:{{ tinyci.version }} \
+            /usr/local/bin/migrator \
+            -u {{ postgres.user }} \ 
+            -p {{ postgres.password }} \
+            -d {{ postgres.database }} \
+            -t {{ postgres.listen.host }} \
+            -o {{ postgres.listen.port }} \
+            /usr/local/bin/migrations/tinyci"

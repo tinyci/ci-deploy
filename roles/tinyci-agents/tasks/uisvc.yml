@@ -1,0 +1,13 @@
+- name: "start the uisvc"
+  docker_container:
+    pull: true
+    name: "tinyci-uisvc"
+    image: "tinyci/release:{{ tinyci.version }}"
+    command: "uisvc-server -c /tinyci.yaml"
+    volumes:
+      - "{{ tinyci.config.agent }}:/tinyci.yaml"
+      - "{{ tinyci.ca_dir }}:{{ tinyci.ca_dir }}"
+    restart_policy: "on-failure"
+    restart_retries: 2
+    network_mode: host
+    restart: "{{ config_file_state is changed }}"

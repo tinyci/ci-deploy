@@ -1,0 +1,19 @@
+---
+
+- name: "create {{ tinyci.ca_dir }}"
+  file:
+    path: "{{ tinyci.ca_dir }}"
+    state: directory
+    recurse: true
+
+- name: "install certificates"
+  copy:
+    src: "ca/{{ item }}"
+    dest: "{{ tinyci.ca_dir }}/{{ item }}"
+  with_items:
+    - "rootCA-key.pem"
+    - "rootCA.pem"
+    - "tinyci-client.key"
+    - "tinyci-client.pem"
+    - "tinyci-server.key"
+    - "tinyci-server.pem"

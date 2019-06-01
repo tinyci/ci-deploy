@@ -1,0 +1,21 @@
+---
+
+- name: "install the hooksvc configuration"
+  template:
+    src: "hooksvc.yaml.j2"
+    dest: "{{ tinyci.config.hook }}"
+  register: hook_config_file_state
+
+- name: "start the hooksvc"
+  docker_container:
+    pull: true
+    name: "tinyci-hooksvc"
+    image: "tinyci/release:{{ tinyci.version }}"
+    command: "hooksvc -c /tinyci.yaml"
+    volumes:
+      - "{{ tinyci.config.hook }}:/tinyci.yaml"
+      - "{{ tinyci.ca_dir }}:{{ tinyci.ca_dir }}"
+    restart_policy: "on-failure"
+    restart_retries: 2
+    network_mode: host
+    restart: "{{ hook_config_file_state is changed }}"

@@ -1,0 +1,113 @@
+# vim: ft=yaml
+# !!! IMPORTANT !!!
+# You need to customize some of these variables for security purposes.
+# !!! IMPORTANT !!!
+---
+tinyci:
+  # version of tinyCI 
+  version: 0.1.0-prerelease
+
+  # CI logs path
+  logs_dir: "/var/tinyci/logs"
+
+  # TLS CA
+  ca_dir: "/var/tinyci/ca"
+
+  # send all requests to logsvc
+  log_requests: true
+
+  # the following dir must be re-used in the following paths, otherwise badness
+  config:
+    agent: "/etc/tinyci-agents.yaml"
+    runner: "/etc/tinyci-runner.yaml"
+    hook: "/etc/tinyci-hook.yaml"
+
+  # change these! they are the auth management system's tokens. See
+  # https://tinyci.org/docs/auth_config for more.
+  session_crypt_key: "2234567123456712345671234567123456712345671234567888888812345678"
+  token_crypt_key: "1234567123456712345671234567123456712345671234567888888812345678"
+
+  # if you want fixed_capabilities to show up in the configuration file, add them below.
+  fixed_capabilities:
+    {} # remove this if you uncomment below
+    # "erikh": # put your username here
+    #   - 'modify:user'
+    #   - 'modify:ci'
+    #   - 'submit'
+    #   - 'cancel'
+  
+  endpoints: 
+    ui: "https://machine-1.local"
+    hooksvc: "https://machine-1.local/hook"
+    # set to false if using https
+    insecure_websockets: true
+  
+  ui:
+    asset_dir: "/var/tinyci/ui"
+    # tls settings for the ui -- defaults to using the same certs but can
+    # deviate e.g. for public hosts.
+    ca_dir: /var/tinyci/ca
+    tls:
+      ca: /var/tinyci/ca/rootCA.pem
+      cert: /var/tinyci/ca/tinyci-server.pem
+      key: /var/tinyci/ca/tinyci-server.key
+
+  # You must bind an oauth account to a github account. Make sure it is a bot
+  # account; or an account you ultimately trust. 
+  oauth:
+    client_id: "<your id>"
+    client_secret: "<your secret>"
+
+  # TLS settings between the microservices are a great idea if they aren't all
+  # running on localhost. the localhost keys will be automatically generated
+  # during the first tinyci-agents playbook run.
+  tls:
+    ca: /var/tinyci/ca/rootCA.pem
+    cert: /var/tinyci/ca/tinyci-server.pem
+    key: /var/tinyci/ca/tinyci-server.key
+
+  # where you want to send your client traffic between different microservices;
+  # this will get better as I have time to integrate envoy, etc. This does
+  # *not* include runner configuration; that is below.
+  clients:
+    # please note the client and server certificates share the same CA.
+    tls:
+      ca: /var/tinyci/ca/rootCA.pem
+      cert: /var/tinyci/ca/tinyci-client.pem
+      key: /var/tinyci/ca/tinyci-client.key
+    logsvc: 'localhost:6005'
+    datasvc: 'localhost:6000'
+    queuesvc: 'localhost:6001'
+    assetsvc: 'localhost:6002'
+
+  # runner configuration. Please note you can set `tinyci.runner.queue` on
+  # individual runners in the inventory to split queues.
+  runner:
+    queue: "default"
+    # please note the client and server certificates share the same CA.
+    clients:
+      tls:
+        ca: /var/tinyci/ca/rootCA.pem
+        cert: /var/tinyci/ca/tinyci-client.pem
+        key: /var/tinyci/ca/tinyci-client.key
+      logsvc: 'machine-1.local:6005'
+      queuesvc: 'machine-1.local:6001'
+      assetsvc: 'machine-1.local:6002'
+
+  tuning:
+    # amount of time to wait until performing another repository scan on github
+    last_scanned_wait: 1h
+
+postgres:
+  user: "tinyci"
+  password: "tinyci"
+  host: "localhost"
+  database: "tinyci"
+  port: 5432
+  datadir: "/postgres"
+  listen: 
+    host: "127.0.0.1"
+    port: 5432
+
+postgres_restart: false # set this in your inventory to kick postgres
+mkcert_version: 1.3.0 # version of mkcert to use for cert generation

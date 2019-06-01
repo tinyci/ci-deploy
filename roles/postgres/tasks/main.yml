@@ -1,0 +1,20 @@
+---
+
+- name: "boot postgresql inside docker"
+  docker_container:
+    pull: true
+    name: "tinyci-postgres"
+    image: "postgres:latest"
+    env:
+      POSTGRES_PASSWORD: "{{ postgres.password }}"
+      POSTGRES_USER: "{{ postgres.user }}"
+      POSTGRES_DB: "{{ postgres.database }}"
+      PGDATA: "/var/lib/postgresql/data"
+    published_ports:
+      - "{{ postgres.listen.host }}:{{ postgres.listen.port }}:5432"
+    volumes:
+      - "{{ postgres.datadir }}:/var/lib/postgresql/data"
+    restart: "{{ postgres_restart }}"
+    restart_policy: "on-failure"
+    restart_retries: 2
+    network_mode: host

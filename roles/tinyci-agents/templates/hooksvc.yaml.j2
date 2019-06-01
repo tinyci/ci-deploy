@@ -1,0 +1,6 @@
+---
+tls:
+  {{ tinyci.clients.tls|to_nice_yaml|indent(width=2) }}
+queue_service: "{{ tinyci.clients.queuesvc }}"
+data_service: "{{ tinyci.clients.datasvc }}"
+log_service: "{{ tinyci.clients.logsvc }}"

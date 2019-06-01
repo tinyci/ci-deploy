@@ -1,0 +1,41 @@
+---
+
+
+- name: Create the tinyCI runner config file
+  template:
+    src: runner-config.j2
+    dest: "{{ tinyci.config.runner }}"
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Create the tinyCI binary directory
+  file:
+    path: /var/tinyci/bin
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Extract the overlay-runner binary
+  unarchive:
+    copy: false
+    src: /var/tinyci/release.tar.gz
+    dest: /var/tinyci/bin
+    extra_opts:
+    - --strip-components=1
+    - binaries/overlay-runner
+
+- name: Create the systemd tinyCI runner unit
+  template:
+    src: overlay-runner.service.j2
+    dest: /etc/systemd/system/overlay-runner.service
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Start overlay-runner
+  systemd:
+    name: overlay-runner
+    state: restarted
+    daemon_reload: yes

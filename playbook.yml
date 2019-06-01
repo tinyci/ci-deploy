@@ -1,0 +1,15 @@
+- hosts: runners
+  become: true
+  roles:
+    - overlay-runner
+
+- hosts: postgres
+  become: true
+  roles:
+    - migration
+
+- hosts: tinyci
+  become: true
+  roles:
+    - tinyci-agents
+    - ui

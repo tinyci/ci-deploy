@@ -1,0 +1,33 @@
+tls:
+  {{ tinyci.tls|to_nice_yaml|indent(width=2) }}
+
+auth:
+  # key for session encryption -- bytes in hex format
+  session_crypt_key: "{{ tinyci.session_crypt_key }}"
+  # key for github token encryption -- bytes in hex format
+  token_crypt_key: "{{ tinyci.token_crypt_key }}"
+  # fixed_capabilities allow you to give some users automatic access (And keep it that way)
+  fixed_capabilities:
+    {{ tinyci.fixed_capabilities|to_nice_yaml|indent(width=4) }}
+oauth:
+  client_id: "{{ tinyci.oauth.client_id }}"
+  client_secret: "{{ tinyci.oauth.client_secret }}"
+  redirect_url: "{{ tinyci.endpoints.ui }}/uisvc/login"
+
+clients:
+  {{ tinyci.clients|to_nice_yaml|indent(width=2) }}
+
+services:
+  last_scanned_wait: "{{ tinyci.tuning.last_scanned_wait }}"
+  logs_root_path: "{{ tinyci.logs_dir }}"
+
+websockets:
+  insecure_websockets: {{ tinyci.endpoints.insecure_websockets }}
+
+db: 'sslmode=disable host={{ postgres.host }} database={{ postgres.database }} user={{ postgres.user }} password={{ postgres.password }} port={{ postgres.port }}'
+
+hook_url: '{{ tinyci.endpoints.hooksvc }}'
+
+url: '{{ tinyci.endpoints.ui }}'
+
+log_requests: {{ tinyci.log_requests }}

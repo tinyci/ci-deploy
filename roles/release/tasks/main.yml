@@ -1,0 +1,11 @@
+---
+
+- name: "create tinyci base dir"
+  file:
+    state: directory
+    name: "/var/tinyci"
+
+- name: "copy release to host"
+  copy:
+    src: release.tar.gz
+    dest: /var/tinyci/release.tar.gz
