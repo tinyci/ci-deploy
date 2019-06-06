@@ -16,8 +16,9 @@ inventory to influence their installation.
 
 There are two paths you must populate:
 
-- `roles/releases/files/release.tar.gz` -- the version of the tinyCI release;
-  once real releases exist, we will just download this from github.
+- `roles/release/files/release.tar.gz` -- the version of the tinyCI release;
+  once real releases exist, we will just download this from github. **Create the
+  directory first.**
 - `roles/certificates/files/ca` -- must be populated with the CA files present
   in your group. You can run the `make-certificates.sh` bash tool to make the
   default certificates with [mkcert](https://github.com/FiloSottile/mkcert).
