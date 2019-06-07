@@ -10,6 +10,7 @@
   copy:
     src: "ca/{{ item }}"
     dest: "{{ tinyci.ca_dir }}/{{ item }}"
+    mode: "0400"
   with_items:
     - "rootCA-key.pem"
     - "rootCA.pem"

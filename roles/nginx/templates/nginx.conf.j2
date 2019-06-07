@@ -62,8 +62,8 @@ http {
   server {
     listen 443 ssl;
 
-    ssl_certificate     {{ tinyci.ui.tls.cert }};
-    ssl_certificate_key {{ tinyci.ui.tls.key }};
+    ssl_certificate     /etc/nginx/nginx.pem;
+    ssl_certificate_key /etc/nginx/nginx.key;
 
     location /hook {
       rewrite /hook/(.*) /$1  break;
@@ -85,8 +85,10 @@ http {
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
+    root /usr/share/nginx/html;
+
     location / {
-      root /usr/share/nginx/html;
+      try_files $uri /index.html =404;
     }
   }
 }
