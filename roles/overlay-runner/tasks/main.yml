@@ -15,6 +15,14 @@
     mode: '0600'
   register: overlay_runner_config_state
 
+- name: Create the tinyCI binary directory
+  file:
+    path: /var/tinyci/bin
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
 - name: Create the systemd tinyCI runner unit
   template:
     src: overlay-runner.service.j2
