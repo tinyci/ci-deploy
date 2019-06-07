@@ -40,9 +40,11 @@ tinyci:
     ui: "https://machine-1.local"
     hooksvc: "https://machine-1.local/hook"
     # set to false if using https
-    insecure_websockets: true
+    insecure_websockets: false
   
   ui:
+    # if set true, will not use the following certs, but nginx.pem/nginx.key in the roles/nginx/files dir
+    use_nginx_tls: false
     asset_dir: "/var/tinyci/ui"
     # tls settings for the ui -- defaults to using the same certs but can
     # deviate e.g. for public hosts.
