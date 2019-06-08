@@ -3,6 +3,26 @@
 # You need to customize some of these variables for security purposes.
 # !!! IMPORTANT !!!
 ---
+queue: "default" # if you want to rename the queue for a specific runner in your inventory
+# host name of instance holding ui, services etc
+tinyci_host: "machine-1.local"
+
+# These are *required* and come from https://github.com/settings/developers
+oauth_client_id: "<client id>"
+oauth_client_secret: "<client id>"
+
+# if you want fixed_capabilities to show up in the configuration file, add them
+# below.
+fixed_capabilities:
+    {} # remove this if you uncomment below
+    # "erikh": # put your username here
+    #   - 'modify:user'
+    #   - 'modify:ci'
+    #   - 'submit'
+    #   - 'cancel'
+
+# alternatively to customizing a few variables, you can fork the repo, and
+# modify the following data structure to get a lot more control.
 tinyci:
   # version of tinyCI 
   version: 0.1.0-prerelease
@@ -28,17 +48,11 @@ tinyci:
   token_crypt_key: "1234567123456712345671234567123456712345671234567888888812345678"
 
   # if you want fixed_capabilities to show up in the configuration file, add them below.
-  fixed_capabilities:
-    {} # remove this if you uncomment below
-    # "erikh": # put your username here
-    #   - 'modify:user'
-    #   - 'modify:ci'
-    #   - 'submit'
-    #   - 'cancel'
+  fixed_capabilities: "{{ fixed_capabilities }}"
   
   endpoints: 
-    ui: "https://machine-1.local"
-    hooksvc: "https://machine-1.local/hook"
+    ui: "https://{{ tinyci_host }}"
+    hooksvc: "https://{{ tinyci_host }}/hook"
     # set to false if using https
     insecure_websockets: false
   
@@ -57,8 +71,8 @@ tinyci:
   # You must bind an oauth account to a github account. Make sure it is a bot
   # account; or an account you ultimately trust. 
   oauth:
-    client_id: "<your id>"
-    client_secret: "<your secret>"
+    client_id: "{{ oauth_client_id }}"
+    client_secret: "{{ oauth_client_secret }}"
 
   # TLS settings between the microservices are a great idea if they aren't all
   # running on localhost. the localhost keys will be automatically generated
@@ -85,16 +99,16 @@ tinyci:
   # runner configuration. Please note you can set `tinyci.runner.queue` on
   # individual runners in the inventory to split queues.
   runner:
-    queue: "default"
+    queue: "{{ queue }}"
     # please note the client and server certificates share the same CA.
     clients:
       tls:
         ca: /var/tinyci/ca/rootCA.pem
         cert: /var/tinyci/ca/tinyci-client.pem
         key: /var/tinyci/ca/tinyci-client.key
-      logsvc: 'machine-1.local:6005'
-      queuesvc: 'machine-1.local:6001'
-      assetsvc: 'machine-1.local:6002'
+      logsvc: '{{ tinyci_host }}:6005'
+      queuesvc: '{{ tinyci_host }}:6001'
+      assetsvc: '{{ tinyci_host }}:6002'
 
   tuning:
     # amount of time to wait until performing another repository scan on github
