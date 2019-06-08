@@ -1,8 +1,3 @@
-- hosts: runners
-  become: true
-  roles:
-    - overlay-runner
-
 - hosts: postgres
   become: true
   roles:
@@ -13,3 +8,8 @@
   roles:
     - tinyci-agents
     - ui
+
+- hosts: runners
+  become: true
+  roles:
+    - overlay-runner
