@@ -3,7 +3,7 @@
 set -euo pipefail
 
 mkdir -p ${HOME}/bin
-curl -sSL https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-linux-amd64 >"${HOME}/bin/mkcert"
+curl -sSL https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-$(uname -s | tr A-Z a-z)-amd64 >"${HOME}/bin/mkcert"
 chmod 0755 ${HOME}/bin/mkcert
 
 export CAROOT=roles/certificates/files/ca
