@@ -112,7 +112,7 @@ tinyci:
 
   tuning:
     # amount of time to wait until performing another repository scan on github
-    last_scanned_wait: 1h
+    last_scanned_wait: 5m
 
 postgres:
   user: "tinyci"
