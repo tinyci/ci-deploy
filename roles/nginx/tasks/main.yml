@@ -3,7 +3,6 @@
   file:
     state: directory
     name: "/etc/nginx"
-  when: tinyci.ui.tls.use_nginx_tls
 
 - name: "upload certificate"
   copy:
@@ -19,22 +18,22 @@
     mode: "0400"
   when: tinyci.ui.tls.use_nginx_tls
 
-- name: "upload dynamic certificate"
-  copy:
-    src: "{{ item }}"
+- name: "symlink dynamic certificate"
+  file:
+    src: "{{ tinyci.ui.tls.cert }}"
     dest: "/etc/nginx/nginx.pem"
+    state: link
+    force: true
     mode: "0400"
-  with_items:
-    - "{{ tinyci.ui.tls.cert }}"
   when: not tinyci.ui.tls.use_nginx_tls
 
-- name: "upload dynamic key"
-  copy:
-    src: "{{ item }}"
+- name: "symlink dynamic key"
+  file:
+    src: "{{ tinyci.ui.tls.key }}"
     dest: "/etc/nginx/nginx.key"
+    state: link
+    force: true
     mode: "0400"
-  with_items:
-    - "{{ tinyci.ui.tls.key }}"
   when: not tinyci.ui.tls.use_nginx_tls
 
 - name: "create nginx configuration file"
