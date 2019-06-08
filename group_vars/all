@@ -43,13 +43,13 @@ tinyci:
     insecure_websockets: false
   
   ui:
-    # if set true, will not use the following certs, but nginx.pem/nginx.key in the roles/nginx/files dir
-    use_nginx_tls: false
     asset_dir: "/var/tinyci/ui"
     # tls settings for the ui -- defaults to using the same certs but can
     # deviate e.g. for public hosts.
     ca_dir: /var/tinyci/ca
     tls:
+      # if set true, will not use the following certs, but nginx.pem/nginx.key in the roles/nginx/files dir
+      use_nginx_tls: false
       ca: /var/tinyci/ca/rootCA.pem
       cert: /var/tinyci/ca/tinyci-server.pem
       key: /var/tinyci/ca/tinyci-server.key
