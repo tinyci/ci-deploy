@@ -15,24 +15,6 @@
     mode: '0600'
   register: overlay_runner_config_state
 
-- name: Create the tinyCI binary directory
-  file:
-    path: /var/tinyci/bin
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-
-- name: Extract the overlay-runner binary
-  unarchive:
-    copy: false
-    src: /var/tinyci/release.tar.gz
-    dest: /var/tinyci/bin
-    extra_opts:
-    - --strip-components=1
-    - binaries/overlay-runner
-  register: overlay_runner_binary_state
-
 - name: Create the systemd tinyCI runner unit
   template:
     src: overlay-runner.service.j2
@@ -46,4 +28,4 @@
     name: overlay-runner
     state: restarted
     daemon_reload: yes
-  when: overlay_runner_config_state is changed or overlay_runner_binary_state is changed
+  when: overlay_runner_config_state is changed or release_binaries_updated is changed

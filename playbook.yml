@@ -6,6 +6,7 @@
 - hosts: tinyci
   become: true
   roles:
+    - release
     - tinyci-agents
     - ui
 
