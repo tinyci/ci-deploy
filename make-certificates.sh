@@ -9,7 +9,13 @@ chmod 0755 ${HOME}/bin/mkcert
 export CAROOT=roles/certificates/files/ca
 
 mkdir -p $CAROOT
-${HOME}/bin/mkcert -install -ecdsa
+
+if [[ "${NO_INSTALL_CA}" = "" ]]
+then
+  ${HOME}/bin/mkcert -install -ecdsa
+else
+  ${HOME}/bin/mkcert -ecdsa
+fi
 
 if [[ ! -f ${CAROOT}/tinyci-server.pem ]] || [[ ! -f ${CAROOT}/tinyci-server.key ]]
 then
