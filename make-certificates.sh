@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -eo pipefail
 
 mkdir -p ${HOME}/bin
 curl -sSL https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-$(uname -s | tr A-Z a-z)-amd64 >"${HOME}/bin/mkcert"
@@ -10,7 +10,7 @@ export CAROOT=roles/certificates/files/ca
 
 mkdir -p $CAROOT
 
-if [[ "${NO_INSTALL_CA}" = "" ]]
+if [[ -z "${NO_INSTALL_CA}" ]]
 then
   ${HOME}/bin/mkcert -install -ecdsa
 else
