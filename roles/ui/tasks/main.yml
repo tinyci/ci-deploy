@@ -12,4 +12,4 @@
     dest: "{{ tinyci.ui.asset_dir }}" 
     extra_opts:
     - --strip-components=2
-    - "tinyci-{{ tinyci.version }}/ui
+    - "tinyci-{{ tinyci.version }}/ui"
