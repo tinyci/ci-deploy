@@ -24,7 +24,7 @@
     src: /var/tinyci/release.tar.gz
     dest: /var/tinyci/bin
     extra_opts:
-      - "--strip-components=1"
-      - "binaries/"
+      - "--strip-components=2"
+      - "tinyci-{{ tinyci.version }}/bin"
   register: release_binaries_updated
 

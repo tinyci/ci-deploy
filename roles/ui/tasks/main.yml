@@ -11,5 +11,5 @@
     src: "/var/tinyci/release.tar.gz"
     dest: "{{ tinyci.ui.asset_dir }}" 
     extra_opts:
-    - --strip-components=1
-    - ci-ui
+    - --strip-components=2
+    - "tinyci-{{ tinyci.version }}/ui
