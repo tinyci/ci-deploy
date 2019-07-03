@@ -25,7 +25,7 @@ fixed_capabilities:
 # modify the following data structure to get a lot more control.
 tinyci:
   # version of tinyCI 
-  version: 0.1.0-prerelease
+  version: 0.1.0
 
   # CI logs path
   logs_dir: "/var/tinyci/logs"
