@@ -1,0 +1,14 @@
+---
+- name: "start the authsvc"
+  docker_container:
+    pull: true
+    name: "tinyci-authsvc"
+    image: "tinyci/release:{{ tinyci.version }}"
+    command: "github-authsvc -c /tinyci.yaml"
+    volumes:
+      - "{{ tinyci.config.agent }}:/tinyci.yaml"
+      - "{{ tinyci.ca_dir }}:{{ tinyci.ca_dir }}"
+    restart_policy: "on-failure"
+    restart_retries: 2
+    network_mode: host
+    restart: "{{ config_file_state is changed }}"

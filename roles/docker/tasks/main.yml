@@ -15,7 +15,9 @@
     shell: /sbin/nologin
     groups: docker
 
-- name: "install python3-docker"
+- name: "install python docker modules"
   apt:
     update_cache: true
-    name: "python3-docker"
+    name: 
+      - python-docker
+      - python3-docker

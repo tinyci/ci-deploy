@@ -2,9 +2,7 @@
 
 - name: "install dependencies"
   apt:
-    name: "{{ item }}"
-  with_items:
-    - build-essential
+    name: "build-essential"
 
 - name: Create the tinyCI runner config file
   template:

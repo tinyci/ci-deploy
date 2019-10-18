@@ -4,7 +4,7 @@
   docker_container:
     pull: true
     name: "tinyci-postgres"
-    image: "postgres:latest"
+    image: "postgres:11"
     env:
       POSTGRES_PASSWORD: "{{ postgres.password }}"
       POSTGRES_USER: "{{ postgres.user }}"

@@ -10,6 +10,7 @@
     dest: "/etc/nginx/nginx.pem"
     mode: "0400"
   when: tinyci.ui.tls.use_nginx_tls
+  register: uploaded_certificate
 
 - name: "upload key"
   copy:
@@ -17,6 +18,7 @@
     dest: "/etc/nginx/nginx.key"
     mode: "0400"
   when: tinyci.ui.tls.use_nginx_tls
+  register: uploaded_key
 
 - name: "symlink dynamic certificate"
   file:
@@ -55,4 +57,5 @@
     restart_policy: "on-failure"
     restart_retries: 2
     network_mode: host
-    restart: "{{ nginx_config_file_state is changed }}"
+    restart: "{{ nginx_config_file_state is changed or uploaded_certificate is changed or uploaded_key is changed }}"
+

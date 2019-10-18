@@ -10,6 +10,8 @@
 
 - include: "datasvc.yml"
 
+- include: "authsvc.yml"
+
 - include: "assetsvc.yml"
 
 - include: "uisvc.yml"
