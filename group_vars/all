@@ -95,6 +95,7 @@ tinyci:
     datasvc: 'localhost:6000'
     queuesvc: 'localhost:6001'
     assetsvc: 'localhost:6002'
+    authsvc: 'localhost:6004'
 
   # runner configuration. Please note you can set `tinyci.runner.queue` on
   # individual runners in the inventory to split queues.
