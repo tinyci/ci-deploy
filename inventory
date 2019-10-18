@@ -5,7 +5,7 @@ machine-1.local ansible_user=erikh
 machine-1.local ansible_user=erikh
 
 [runners]
-machine-2.local ansible_user=erikh tinyci.runner.queue=test1
-machine-3.local ansible_user=erikh
-machine-4.local ansible_user=erikh
-machine-5.local ansible_user=erikh
+machine-2.local ansible_user=erikh runner_name=machine-2 tinyci.runner.queue=test1
+machine-3.local ansible_user=erikh runner_name=machine-3
+machine-4.local ansible_user=erikh runner_name=machine-4
+machine-5.local ansible_user=erikh runner_name=machine-5
