@@ -1,5 +1,8 @@
 ---
 
+- name: "pull latest tinyci release"
+  command: "docker pull tinyci/release:{{ tinyci.version }}"
+
 - name: "migrate to latest database version"
   command: "docker run --net host --rm \
             tinyci/release:{{ tinyci.version }} \
