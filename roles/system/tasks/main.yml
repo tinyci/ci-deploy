@@ -1,0 +1,20 @@
+---
+- name: "Install ntp, ntpdate"
+  apt:
+    name:
+      - ntp
+      - ntpdate
+
+- name: "stop ntp (for just a moment)"
+  service:
+    name: ntp
+    state: stopped
+
+- name: "update time"
+  command: "ntpdate time.nist.gov"
+
+- name: "enable ntp service"
+  service:
+    name: ntp
+    enabled: true
+    state: started
