@@ -29,9 +29,13 @@
     group: root
     mode: '0755'
 
-- name: Start overlay-runner
+- name: Ensure overlay-runner is started
   systemd:
     name: overlay-runner
-    state: restarted
+    enabled: true
+    state: started
     daemon_reload: yes
+
+- name: graceful restart of overlay-runner
+  command: "pkill -HUP overlay-runner"
   when: overlay_runner_config_state is changed or release_binaries_updated is changed
